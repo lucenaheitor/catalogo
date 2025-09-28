@@ -11,21 +11,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 
 @RestController
+@RequestMapping("/livros")
 @RequiredArgsConstructor
 public class FilmeController {
 
     private final LivroService livroService;
 
     @PostMapping
-    public ResponseEntity<CadastroLivroDtoResponse> cadastroLivro(CadastroLivroDtoRequest dto){
+    public ResponseEntity<CadastroLivroDtoResponse> cadastroLivro(@RequestBody CadastroLivroDtoRequest dto){
         CadastroLivroDtoResponse response = livroService.criarLivro(dto);
         return ResponseEntity.ok().body(response);
     }
@@ -36,8 +35,8 @@ public class FilmeController {
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<DetalharLivroDto> detalharLivro(UUID id){
+    @GetMapping("/{id}")
+    public ResponseEntity<DetalharLivroDto> detalharLivro(@PathVariable Long id){
         DetalharLivroDto response = livroService.detalharLivro(id);
         return ResponseEntity.ok(response);
     }

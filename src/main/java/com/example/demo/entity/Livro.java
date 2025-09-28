@@ -1,22 +1,21 @@
-package com.example.demo.dto;
+package com.example.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@Entity(name = "livros")
+@Table(name = "livros")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Livro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
     private String titulo;
     private String genero;

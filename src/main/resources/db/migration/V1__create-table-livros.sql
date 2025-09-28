@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS livros (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    genero   VARCHAR(100),
+    autor VARCHAR(255) NOT NULL,
+    ano INT,
+    sinopse VARCHAR(1000)
+);
+
