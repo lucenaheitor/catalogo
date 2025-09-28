@@ -19,27 +19,27 @@ public class LivroService {
     private final LivroMapper livroMapper;
 
     public CadastroLivroDtoResponse criarLivro(CadastroLivroDtoRequest dto) {
-        Livro livro = LivroMapper.INSTANCE.toEntity(dto);
+        Livro livro = livroMapper.toEntity(dto);
         livro = livroRepository.save(livro);
-        return LivroMapper.INSTANCE.toCadastroDto(livro);
+        return livroMapper.toCadastroDto(livro);
     }
 
     public Page<ListarLivrosDto> listarLivros(Pageable pageable){
         return livroRepository.findAll(pageable)
-                .map(LivroMapper.INSTANCE::toListarDto);
+                .map(livroMapper::toListarDto);
     }
 
     public DetalharLivroDto detalharLivro(Long id) {
         Livro livro  = livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
-        return LivroMapper.INSTANCE.toDetalharDto(livro);
+        return livroMapper.toDetalharDto(livro);
     }
 
     public DetalharLivroDto atualizarLivro(Long id, AtualizarLivroDTO dto) {
         Livro livro = livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
-        LivroMapper.INSTANCE.updateLivroFromDto(dto, livro);
-        livro = livroRepository.save(livro);
-        return LivroMapper.INSTANCE.toDetalharDto(livro);
+        livroMapper.updateLivroFromDto(dto, livro);
+        livroRepository.save(livro);
+        return livroMapper.toDetalharDto(livro);
     }
 }

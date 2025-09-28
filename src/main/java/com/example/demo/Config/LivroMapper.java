@@ -6,18 +6,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface LivroMapper {
 
     LivroMapper INSTANCE = Mappers.getMapper(LivroMapper.class);
 
     Livro toEntity(CadastroLivroDtoRequest dto);
-
     CadastroLivroDtoResponse toCadastroDto(Livro livro);
-
     ListarLivrosDto toListarDto(Livro livro);
-
     DetalharLivroDto toDetalharDto(Livro livro);
+    AtualizarLivroDTO toAtualizarDto(Livro livro);
 
     void updateLivroFromDto(AtualizarLivroDTO dto, @MappingTarget Livro livro);
+
+
 }

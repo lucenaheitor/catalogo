@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AtualizarLivroDTO {
 
-    private Long id;
     private String titulo;
     private String genero;
     private String autor;

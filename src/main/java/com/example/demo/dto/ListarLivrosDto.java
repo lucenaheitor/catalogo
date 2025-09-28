@@ -11,7 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ListarLivrosDto {
 
-    private UUID id;
     private String titulo;
     private String genero;
 }
