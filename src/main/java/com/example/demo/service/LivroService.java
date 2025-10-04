@@ -35,11 +35,15 @@ public class LivroService {
         return livroMapper.toDetalharDto(livro);
     }
 
-    public DetalharLivroDto atualizarLivro(Long id, AtualizarLivroDTO dto) {
+    public AtualizarLivroDTO atualizarLivro(Long id, AtualizarLivroDTO dto) {
         Livro livro = livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
         livroMapper.updateLivroFromDto(dto, livro);
         livroRepository.save(livro);
-        return livroMapper.toDetalharDto(livro);
+        return livroMapper.toAtualizarDto(livro);
+    }
+
+    public void excluirLivro(Long id){
+        livroRepository.deleteById(id);
     }
 }

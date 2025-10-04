@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.dto.CadastroLivroDtoRequest;
-import com.example.demo.dto.CadastroLivroDtoResponse;
-import com.example.demo.dto.DetalharLivroDto;
-import com.example.demo.dto.ListarLivrosDto;
+import com.example.demo.dto.*;
 
 import com.example.demo.service.LivroService;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +34,17 @@ public class LivroController {
     public ResponseEntity<DetalharLivroDto> detalharLivro(@PathVariable Long id){
         DetalharLivroDto response = livroService.detalharLivro(id);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<AtualizarLivroDTO> atualizar(@PathVariable Long id, @RequestBody AtualizarLivroDTO dto){
+        AtualizarLivroDTO response = livroService.atualizarLivro(id, dto);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping({"/{id}"})
+    public ResponseEntity<Void> excluir(@PathVariable Long id){
+        livroService.excluirLivro(id);
+        return ResponseEntity.noContent().build();
     }
 }
