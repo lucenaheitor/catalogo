@@ -32,4 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-.env/
+# arquivos de ambiente/segredos
+.env
+*.env
+.env.*
