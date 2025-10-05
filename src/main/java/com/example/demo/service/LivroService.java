@@ -35,10 +35,9 @@ public class LivroService {
         return livroMapper.toDetalharDto(livro);
     }
 
-    public AtualizarLivroDTO atualizarLivro(Long id, AtualizarLivroDTO dto) {
-        Livro livro = livroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
-        livroMapper.updateLivroFromDto(dto, livro);
+    public AtualizarLivroDTO atualizarLivro(AtualizarLivroDTO dto) {
+        Livro livro = livroRepository.getReferenceById(dto.getId());
+        livroMapper.updateFromDto(dto, livro);
         livroRepository.save(livro);
         return livroMapper.toAtualizarDto(livro);
     }

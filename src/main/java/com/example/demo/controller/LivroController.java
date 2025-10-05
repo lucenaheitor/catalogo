@@ -37,8 +37,8 @@ public class LivroController {
     }
 
     @PutMapping
-    public ResponseEntity<AtualizarLivroDTO> atualizar(@PathVariable Long id, @RequestBody AtualizarLivroDTO dto){
-        AtualizarLivroDTO response = livroService.atualizarLivro(id, dto);
+    public ResponseEntity<AtualizarLivroDTO> atualizar(AtualizarLivroDTO dto){
+        AtualizarLivroDTO response = livroService.atualizarLivro(dto);
         return ResponseEntity.ok(response);
     }
 

@@ -17,7 +17,6 @@ public interface LivroMapper {
     DetalharLivroDto toDetalharDto(Livro livro);
     AtualizarLivroDTO toAtualizarDto(Livro livro);
 
-    void updateLivroFromDto(AtualizarLivroDTO dto, @MappingTarget Livro livro);
-
+    void updateFromDto(AtualizarLivroDTO dto, @MappingTarget Livro livro);
 
 }
