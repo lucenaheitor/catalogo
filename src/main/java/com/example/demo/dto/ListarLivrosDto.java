@@ -13,4 +13,6 @@ public class ListarLivrosDto {
 
     private String titulo;
     private String genero;
+    private String autor;
+    private Integer ano;
 }

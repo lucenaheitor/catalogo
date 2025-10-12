@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.*;
-
 import com.example.demo.service.LivroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/livros")
@@ -19,9 +21,10 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping
-    public ResponseEntity<CadastroLivroDtoResponse> cadastroLivro(@RequestBody CadastroLivroDtoRequest dto){
+    public ResponseEntity<CadastroLivroDtoResponse> cadastroLivro(@RequestBody CadastroLivroDtoRequest dto, UriComponentsBuilder uriComponentsBuilder){
         CadastroLivroDtoResponse response = livroService.criarLivro(dto);
-        return ResponseEntity.ok().body(response);
+        URI adress =  uriComponentsBuilder.path("/livros/{id}").buildAndExpand(dto.getAutor()).toUri();
+        return ResponseEntity.created(adress).body(response);
     }
 
     @GetMapping
@@ -36,8 +39,17 @@ public class LivroController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping
-    public ResponseEntity<AtualizarLivroDTO> atualizar(AtualizarLivroDTO dto){
+    @GetMapping("/autor")
+    public ResponseEntity<Page<ListarLivrosDto>> procurarPorAutor(
+            @RequestParam String autor,
+            @PageableDefault(size = 20, sort = "titulo") Pageable pageable) {
+
+        Page<ListarLivrosDto> page = livroService.procurarAutor(autor, pageable);
+        return ResponseEntity.ok(page);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AtualizarLivroDTO> atualizar( @RequestParam AtualizarLivroDTO dto){
         AtualizarLivroDTO response = livroService.atualizarLivro(dto);
         return ResponseEntity.ok(response);
     }

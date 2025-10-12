@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class LivroService {
@@ -33,6 +32,12 @@ public class LivroService {
         Livro livro  = livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
         return livroMapper.toDetalharDto(livro);
+    }
+
+    public Page<ListarLivrosDto> procurarAutor(String autor, Pageable pageable) {
+        String aux = (autor == null) ? "" : autor.trim();
+        Page<Livro> page = livroRepository.findByAutor(aux, pageable);
+        return page.map(livroMapper::toListarDto);
     }
 
     public AtualizarLivroDTO atualizarLivro(AtualizarLivroDTO dto) {
