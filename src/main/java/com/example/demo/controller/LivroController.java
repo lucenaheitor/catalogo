@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.*;
 import com.example.demo.service.LivroService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<CadastroLivroDtoResponse> cadastroLivro(@RequestBody CadastroLivroDtoRequest dto, UriComponentsBuilder uriComponentsBuilder){
         CadastroLivroDtoResponse response = livroService.criarLivro(dto);
         URI adress =  uriComponentsBuilder.path("/livros/{id}").buildAndExpand(dto.getAutor()).toUri();
@@ -48,8 +50,9 @@ public class LivroController {
         return ResponseEntity.ok(page);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AtualizarLivroDTO> atualizar( @RequestParam AtualizarLivroDTO dto){
+    @PutMapping
+    @Transactional
+    public ResponseEntity<AtualizarLivroDTO> atualizar(@RequestBody AtualizarLivroDTO dto){
         AtualizarLivroDTO response = livroService.atualizarLivro(dto);
         return ResponseEntity.ok(response);
     }

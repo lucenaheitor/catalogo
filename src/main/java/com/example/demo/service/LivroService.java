@@ -8,7 +8,9 @@ import com.example.demo.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class LivroService {
     public CadastroLivroDtoResponse criarLivro(CadastroLivroDtoRequest dto) {
         Livro livro = livroMapper.toEntity(dto);
         livro = livroRepository.save(livro);
-        return livroMapper.toCadastroDto(livro);
+        return LivroMapper.INSTANCE.toCadastroDto(livro);
     }
 
     public Page<ListarLivrosDto> listarLivros(Pageable pageable){
@@ -30,8 +32,8 @@ public class LivroService {
 
     public DetalharLivroDto detalharLivro(Long id) {
         Livro livro  = livroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
-        return livroMapper.toDetalharDto(livro);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return LivroMapper.INSTANCE.toDetalharDto(livro);
     }
 
     public Page<ListarLivrosDto> procurarAutor(String autor, Pageable pageable) {
@@ -44,7 +46,7 @@ public class LivroService {
         Livro livro = livroRepository.getReferenceById(dto.getId());
         livroMapper.updateFromDto(dto, livro);
         livroRepository.save(livro);
-        return livroMapper.toAtualizarDto(livro);
+        return LivroMapper.INSTANCE.toAtualizarDto(livro);
     }
 
     public void excluirLivro(Long id){
